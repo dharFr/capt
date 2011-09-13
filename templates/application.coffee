@@ -4,7 +4,7 @@ class Application
   start: ->
     console.log 'App started'
 
-    # Create your controllers here...
+    # Create your routers here...
     
     # Then start backbone
     # Backbone.history.start()
