@@ -27,8 +27,8 @@ Results in:
 And creates this directory structure:
 
     ./app
-    ./app/controllers
-    ./app/controllers/application.coffee
+    ./app/application.coffee
+    ./app/routers
     ./app/models
     ./app/views
     ./app/views/jst
@@ -85,17 +85,17 @@ You can access the model in `/app/models`. If you load `/spec/` - you will see t
 
 <img src="images/capt-specs.png" />
 
-## Creating a controller, view and getting things started
+## Creating a router, view and getting things started
 
-We will create a notes controller and two views, an index view and a new view. This will be a pretty basic application that doesn't do editing or deleting, but you'll get the idea of how things should work.
+We will create a notes router and two views, an index view and a new view. This will be a pretty basic application that doesn't do editing or deleting, but you'll get the idea of how things should work.
 
-## Controller
+## Router
 
-Create the controller:
+Create the router:
 
-    capt generate controller notes
+    capt generate router notes
     
-Then open up `/app/controllers/application.coffee` - it will look a bit like this:
+Then open up `/app/application.coffee` - it will look a bit like this:
 
     class Application
       constructor: ->
@@ -103,7 +103,7 @@ Then open up `/app/controllers/application.coffee` - it will look a bit like thi
       start: ->
         console.log 'App started'
 
-        # Create your controllers here...
+        # Create your routers here...
     
         # Then start backbone
         # Backbone.history.start()
@@ -111,20 +111,20 @@ Then open up `/app/controllers/application.coffee` - it will look a bit like thi
 
     @Application = Application
 
-You need to add a line of code to instantiate your notes controller, then start the backbone history router.
+You need to add a line of code to instantiate your notes router, then start the backbone history router.
 
     start: ->
-      new NotesController
+      new NotesRouter
       Backbone.history.start()
 
 While we're here, we'll create a global `Notes` instance of a NoteCollection, which we can use to store all our notes. If you'd rather, you could use `app.notes` and not pollute the global namespace, but for smaller apps, I prefer to be a scope-polluter.
 
     constructor: ->
-      window.Items = new ItemCollection
+      window.Notes = new NoteCollection
       
 ## Create our view
 
-Views are created for a controller so you create a show view on the notes controllers. This isn't perfect, as often times I find I create a controller with only a single view, but it's the convention I work too.
+Views are created for a router so you create a show view on the notes routers. This isn't perfect, as often times I find I create a router with only a single view, but it's the convention I work too.
 
     capt generate view notes index
 
@@ -142,9 +142,9 @@ If you look in `spec/views/notes/index.coffee` you'll see there is a disabled sp
 
 ## Edit the controller and fire up the app
 
-We want to instantiate a NotesIndexView when we view the notes#index controller - like so:
+We want to instantiate a NotesIndexView when we view the notes#index router - like so:
 
-    class NotesController extends Backbone.Controller
+    class NotesRouter extends Backbone.Router
       routes :
         "notes/:id" : "show"
         "notes" : "index"
@@ -154,7 +154,7 @@ We want to instantiate a NotesIndexView when we view the notes#index controller 
         view.render()
 
 
-And now we need to add this to the start of the NotesController spec, so that the specs pass:
+And now we need to add this to the start of the NotesRouter spec, so that the specs pass:
 
     beforeEach ->
       window.Notes = new NoteCollection
