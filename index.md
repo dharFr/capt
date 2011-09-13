@@ -15,7 +15,7 @@ Capt has been under development since November '10, but it's still very alpha, e
 
 ## Tutorial
 
-There is a [tutorial here](/tutorial.html), it's incomplete, feel free to clone the documentation [branch](https://github.com/bnolan/capt/tree/gh-pages) and send me push requests.
+There is a [tutorial here](tutorial.md), it's incomplete, feel free to clone the documentation [branch](https://github.com/bnolan/capt/tree/gh-pages) and send me push requests.
 
 ## Installation 
 
@@ -74,7 +74,8 @@ Specify files in `config.yml`. The default config.yml looks like this:
       - 'lib/underscore.js'
       - 'lib/backbone.js'
       - 'lib/less.js'
-      - 'app/controllers/*.coffee'
+      - 'app/application.coffee'
+      - 'app/routers/*.coffee'
       - 'app/views/**/*.coffee'
       - 'app/models/*.coffee'
 
@@ -83,6 +84,10 @@ Specify files in `config.yml`. The default config.yml looks like this:
   
     specs:
       - 'spec/*/*.coffee'
+      - 'spec/views/*/*.coffee'
+
+    templates:
+      - 'app/templates/*/*.eco'
 
 Add files to each section to specify build order. Files will only be included once. For example:
 
