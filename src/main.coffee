@@ -134,7 +134,7 @@ task 'new', 'create a new project', (arguments) ->
 
   sys.puts " * Creating folders"
 
-  dirs = ["", "spec", "spec/jasmine", "spec/models", "spec/controllers", "spec/views", "app", "app/views", "app/views/templates", "app/controllers", "app/models", "lib", "public", "public/stylesheets", "spec/fixtures"]
+  dirs = ["", "spec", "spec/jasmine", "spec/models", "spec/controllers", "spec/views", "app", "app/views", "app/templates", "app/controllers", "app/models", "lib", "public", "public/stylesheets", "spec/fixtures"]
 
   for dir in dirs
     fs.mkdirSync "#{project}/#{dir}", 0755
@@ -247,6 +247,9 @@ task 'generate view', 'create a new view', (arguments) ->
 
   if !Path.existsSync("#{project.root}/app/templates/#{controller}")
     fs.mkdirSync "#{project.root}/app/templates/#{controller}", 0755
+
+  if !Path.existsSync("#{project.root}/spec/views/#{controller}")
+    fs.mkdirSync "#{project.root}/spec/views/#{controller}", 0755
 
   copyFile "#{root}/templates/views/view.coffee", "app/views/#{controller}/#{view}.#{project.language()}"
   copyFile "#{root}/templates/templates/template.eco", "app/templates/#{controller}/#{view}.eco"
